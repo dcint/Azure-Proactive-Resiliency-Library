@@ -17,11 +17,11 @@ The presented resiliency recommendations in this guidance include Aks and associ
 | [AKS-1 - Deploy AKS cluster across availability zones](#aks-1---deploy-aks-cluster-across-availability-zones)                                 |  High  | Preview |         Yes         |
 | [AKS-2 - Isolate system pods](#aks-2---isolate-system-pods)                                                                                   |  High  | Preview |         Yes         |
 | [AKS-3 - Enable AKS-managed Azure AD integration](#aks-3---enable-aks-managed-azure-ad-integration)                                           |  High  | Preview |         Yes         |
-| [AKS-4 - Configure Azure CNI networking for dynamic allocation of IPs](#aks-4---configure-azure-cni-networking-for-dynamic-allocation-of-ips) | Medium | Preview |         Yes         |
-| [AKS-5 - Enable the cluster autoscaler on an existing cluster](#aks-5---enable-the-cluster-autoscaler-on-an-existing-cluster)                 |  High  | Preview |         Yes         |
-| [AKS-6 - Plan for multiregion deployment](#aks-6---plan-for-multiregion-deployment)                                                           |  High  | Preview |         No          |
-| [AKS-7 - Back up Azure Kubernetes Service](#aks-7---back-up-azure-kubernetes-service)                                                         |  Low   | Preview |         No          |
-
+| [AKS-4 - Disable Local Accounts](#aks-4---disable-local-accounts)                                                                             |  High  | Preview |         Yes         |
+| [AKS-5 - Configure Azure CNI networking for dynamic allocation of IPs](#aks-5---configure-azure-cni-networking-for-dynamic-allocation-of-ips) | Medium | Preview |         Yes         |
+| [AKS-6 - Enable the cluster autoscaler on an existing cluster](#aks-6---enable-the-cluster-autoscaler-on-an-existing-cluster)                 |  High  | Preview |         Yes         |
+| [AKS-7 - Plan for multiregion deploymen](#aks-7---plan-for-multiregion-deployment)                                                            |  High  | Preview |         No          |
+| [AKS-8  - Back up Azure Kubernetes Service](#aks-8---back-up-azure-kubernetes-service)                                                        |  Low   | Preview |         No          |
 {{< /table >}}
 
 {{< alert style="info" >}}
@@ -100,7 +100,32 @@ Enabling Azure AD integration on an AKS cluster provides several benefits for ma
 
 - [Azure AD integration](https://learn.microsoft.com/en-us/azure/aks/concepts-identity#azure-ad-integration)
 - [Use Azure role-based access control for AKS](https://learn.microsoft.com/en-us/azure/aks/manage-azure-rbac?source=recommendations)
-- [Manage AKS local accounts](https://learn.microsoft.com/en-us/azure/aks/manage-local-accounts-managed-azure-ad?source=recommendations)
+
+#### Queries/Scripts
+
+##### Azure Resource Graph
+
+{{< collapse title="Show/Hide Query/Script" >}}
+
+{{< code lang="sql" file="code/aks-3/aks-3.kql" >}} {{< /code >}}
+
+{{< /collapse >}}
+
+<br><br>
+
+### AKS-4 - Disable Local Accounts
+
+#### Impact: High
+
+#### Recommendation/Guidance
+
+AKS offers native Kubernetes user authentication, but it is not recommended for user access due to its certificate-based approach, which operates independently of your primary identity provider. This can complicate centralized user access control and governance. For optimal security and management, it is advisable to exclusively manage cluster access through Azure Active Directory and disable local account access within your cluster's configuration.
+
+
+##### Resources
+
+- [AKS Baseline recommendations](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/containers/aks/baseline-aks?toc=%2Fazure%2Faks%2Ftoc.json&bc=%2Fazure%2Faks%2Fbreadcrumb%2Ftoc.json#local-accounts)
+- [Manage local accounts with AKS-managed Azure Active Directory integration](https://learn.microsoft.com/en-us/azure/aks/manage-local-accounts-managed-azure-ad)
 
 #### Queries/Scripts
 
@@ -115,7 +140,7 @@ Enabling Azure AD integration on an AKS cluster provides several benefits for ma
 <br><br>
 
 
-### AKS-4 - Configure Azure CNI networking for dynamic allocation of IPs
+### AKS-5 - Configure Azure CNI networking for dynamic allocation of IPs
 
 #### Impact: Medium
 
@@ -134,14 +159,14 @@ The Azure CNI networking solution for AKS provides several benefits for managing
 
 {{< collapse title="Show/Hide Query/Script" >}}
 
-{{< code lang="sql" file="code/aks-4/aks-4.kql" >}} {{< /code >}}
+{{< code lang="sql" file="code/aks-5/aks-5.kql" >}} {{< /code >}}
 
 {{< /collapse >}}
 
 <br><br>
 
 
-### AKS-5 - Enable the cluster autoscaler on an existing cluster
+### AKS-6 - Enable the cluster autoscaler on an existing cluster
 
 #### Impact: High
 
@@ -161,14 +186,14 @@ AKS provides several options for scaling your cluster to meet changing demands. 
 
 {{< collapse title="Show/Hide Query/Script" >}}
 
-{{< code lang="sql" file="code/aks-5/aks-5.kql" >}} {{< /code >}}
+{{< code lang="sql" file="code/aks-6/aks-6.kql" >}} {{< /code >}}
 
 {{< /collapse >}}
 
 <br><br>
 
 
-### AKS-6 - Plan for multiregion deployment
+### AKS-7 - Plan for multiregion deployment
 
 #### Impact: High
 
@@ -188,14 +213,14 @@ An AKS cluster is deployed into a single region. To protect your system from reg
 
 {{< collapse title="Show/Hide Query/Script" >}}
 
-{{< code lang="sql" file="code/aks-6/aks-6.kql" >}} {{< /code >}}
+{{< code lang="sql" file="code/aks-7/aks-7.kql" >}} {{< /code >}}
 
 {{< /collapse >}}
 
 <br><br>
 
 
-### AKS-7 - Back up Azure Kubernetes Service
+### AKS-8 - Back up Azure Kubernetes Service
 
 #### Impact: Low
 
@@ -214,7 +239,7 @@ AKS is increasingly being used for stateful applications that require a backup s
 
 {{< collapse title="Show/Hide Query/Script" >}}
 
-{{< code lang="sql" file="code/aks-7/aks-7.kql" >}} {{< /code >}}
+{{< code lang="sql" file="code/aks-8/aks-8.kql" >}} {{< /code >}}
 
 {{< /collapse >}}
 

@@ -1,6 +1,6 @@
 // Azure Resource Graph Query
-// Network Profile for AKS Clusters
+//description: Returns a list of AKS clusters with Local Accounts disabled
 Resources
 | where type == "microsoft.containerservice/managedclusters"
-| extend networkProfile = tostring (parse_json(properties.networkProfile.networkPlugin))
-| project name, networkProfile
+| extend DisableLocalAccount = tostring(parse_json(properties.disableLocalAccounts))
+| project DisableLocalAccount
